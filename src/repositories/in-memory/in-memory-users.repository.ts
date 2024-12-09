@@ -3,6 +3,13 @@ import type { IUsersRepository } from '../users-repository'
 import { hash } from 'bcryptjs'
 
 export class InMemoryUsersRepository implements IUsersRepository {
+  async findOneById(id: string): Promise<User | null> {
+    const user = this.items.find(item => item.id === id)
+    if (!user) {
+      return null
+    }
+    return user
+  }
   public items: User[] = []
   async create(data: Prisma.UserCreateInput): Promise<User> {
     const user: User = {
