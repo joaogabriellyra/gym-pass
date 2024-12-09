@@ -1,14 +1,18 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { AuthenticateUseCase } from './authenticate'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users.repository'
 import { hash } from 'bcryptjs'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
-describe('Authenticate User Case', () => {
-  it('should not be able to authenticate with a unused email', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const sut = new AuthenticateUseCase(usersRepository)
+let usersRepository: InMemoryUsersRepository
+let sut: AuthenticateUseCase
 
+describe('Authenticate User Case', () => {
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository()
+    sut = new AuthenticateUseCase(usersRepository)
+  })
+  it('should not be able to authenticate with a unused email', async () => {
     const passwordHashed = await hash('123456', 6)
     const registeredEmail = 'linus.torvalds@example.com'
     const unusedEmail = 'jgabriellyra@hotmail.com'
@@ -28,9 +32,6 @@ describe('Authenticate User Case', () => {
   })
 
   it('should not be able to authenticate with a wrong password', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const sut = new AuthenticateUseCase(usersRepository)
-
     const passwordHashed = await hash('123456', 6)
     const registeredEmail = 'linus.torvalds@example.com'
     const wrongPassword = '654321'
@@ -50,9 +51,6 @@ describe('Authenticate User Case', () => {
   })
 
   it('should be able to authenticate a user', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const sut = new AuthenticateUseCase(usersRepository)
-
     const passwordHashed = await hash('123456', 6)
     const registeredEmail = 'linus.torvalds@example.com'
 
