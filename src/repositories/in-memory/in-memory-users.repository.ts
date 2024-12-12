@@ -1,6 +1,7 @@
 import type { Prisma, User } from '@prisma/client'
 import type { IUsersRepository } from '../users-repository'
 import { hash } from 'bcryptjs'
+import { randomUUID } from 'node:crypto'
 
 export class InMemoryUsersRepository implements IUsersRepository {
   async findOneById(id: string): Promise<User | null> {
@@ -13,7 +14,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
   public items: User[] = []
   async create(data: Prisma.UserCreateInput): Promise<User> {
     const user: User = {
-      id: 'user-1',
+      id: randomUUID(),
       name: 'Linus Torvalds',
       email: 'linus.torvalds@example.com',
       created_at: new Date(),
