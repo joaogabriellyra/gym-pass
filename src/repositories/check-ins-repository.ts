@@ -1,5 +1,5 @@
-import type { CheckIn } from '@prisma/client'
+import type { CheckIn, Prisma } from '@prisma/client'
 
-export interface ICheckInRepository {
-  findOneById(id: string): Promise<CheckIn | null>
+export interface ICheckInsRepository {
+  create(data: Prisma.CheckInCreateInput): Promise<CheckIn>
 }
