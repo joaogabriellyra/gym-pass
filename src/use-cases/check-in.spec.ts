@@ -24,11 +24,13 @@ describe('Check-in User Case', () => {
       gymId: 'gym-id-1',
       userId: 'user-id-1',
     })
-    console.log(checkIn.created_at)
+
     expect(checkIn.id).toEqual(expect.any(String))
   })
 
   it('should not be able to check in twice in the same day', async () => {
+    vi.setSystemTime(new Date(2020, 11, 22, 20))
+
     await sut.execute({
       gymId: 'gym-id-1',
       userId: 'user-id-1',
@@ -40,5 +42,23 @@ describe('Check-in User Case', () => {
         userId: 'user-id-1',
       })
     ).rejects.toBeInstanceOf(Error)
+  })
+
+  it('should be able to check in twice in different days', async () => {
+    vi.setSystemTime(new Date(2020, 11, 22, 20))
+
+    await sut.execute({
+      gymId: 'gym-id-1',
+      userId: 'user-id-1',
+    })
+
+    vi.setSystemTime(new Date(2020, 11, 23, 20))
+
+    const { checkIn } = await sut.execute({
+      gymId: 'gym-id-1',
+      userId: 'user-id-1',
+    })
+
+    expect(checkIn.id).toEqual(expect.any(String))
   })
 })
