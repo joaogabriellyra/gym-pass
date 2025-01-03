@@ -1,0 +1,26 @@
+import type { Gym } from '@prisma/client'
+import type { IGymsRepository } from '@/repositories/gyms-repository'
+
+interface CreateGymUseCaseRequest {
+  title: string
+  description: string | null
+  phone: string | null
+  latitude: number
+  longitude: number
+}
+
+interface CreateGymUseCaseResponse {
+  gym: Gym
+}
+
+export class CreateGymUseCase {
+  constructor(private gymsRepository: IGymsRepository) {}
+
+  async execute({
+    title,
+    description,
+    phone,
+    latitude,
+    longitude,
+  }: CreateGymUseCaseRequest): Promise<CreateGymUseCaseResponse> {}
+}
