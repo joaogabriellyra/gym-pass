@@ -14,13 +14,13 @@ describe('Check-in User Case', () => {
     gymsRepository = new InMemoryGymsRepository()
     sut = new CheckInUseCase(checkInsRepository, gymsRepository)
 
-    gymsRepository.gyms.push({
+    gymsRepository.create({
+      id: 'gym-id-1',
       title: 'Green',
       description: 'Vem ser Green!',
-      id: 'gym-id-1',
+      phone: '8132238679',
       latitude: new Decimal(-8.0379534),
       longitude: new Decimal(-35.0391105),
-      phone: '8132238679',
     })
 
     vi.useFakeTimers()
