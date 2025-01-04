@@ -22,5 +22,17 @@ export class CreateGymUseCase {
     phone,
     latitude,
     longitude,
-  }: CreateGymUseCaseRequest): Promise<CreateGymUseCaseResponse> {}
+  }: CreateGymUseCaseRequest): Promise<CreateGymUseCaseResponse> {
+    const gym = await this.gymsRepository.create({
+      latitude,
+      longitude,
+      title,
+      description,
+      phone,
+    })
+
+    return {
+      gym,
+    }
+  }
 }
