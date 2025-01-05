@@ -4,7 +4,7 @@ import type { IGymsRepository } from '@/repositories/gyms-repository'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 import { getDistanceBetweeCoordinates } from './utils/get-distance-between-coordinates'
 import { MaxDistanceError } from './errors/max-distance-error'
-import { CheckInTwiceInTheSameDayError } from './errors/check-in-twice-same-day-error'
+import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins-error'
 
 interface CheckInUseCaseRequest {
   userId: string
@@ -52,7 +52,7 @@ export class CheckInUseCase {
     )
 
     if (checkInOnSameDay) {
-      throw new CheckInTwiceInTheSameDayError()
+      throw new MaxNumberOfCheckInsError()
     }
 
     const checkIn = await this.checkInsRepository.create({
