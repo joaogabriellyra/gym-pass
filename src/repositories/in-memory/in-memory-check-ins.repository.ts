@@ -4,6 +4,13 @@ import { randomUUID } from 'node:crypto'
 import dayjs from 'dayjs'
 
 export class InMemoryCheckInsRepository implements ICheckInsRepository {
+  async countByUserId(userId: string): Promise<number> {
+    const howManyCheckIns = this.items.filter(
+      checkin => checkin.user_id === userId
+    ).length
+
+    return howManyCheckIns
+  }
   async findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
     const checkins = this.items
       .filter(checkin => checkin.user_id === userId)
