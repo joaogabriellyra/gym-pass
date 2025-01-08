@@ -1,16 +1,16 @@
 import type { IGymsRepository } from '@/repositories/gyms-repository'
 import type { Gym } from '@prisma/client'
 
-interface GetGymByNameUseCaseRequest {
+interface SearchGymsUseCaseRequest {
   name: string
 }
 
-interface GetGymByNameUseCaseResponse {
+interface SearchGymsUseCaseResponse {
   gym: Gym
 }
 
-export class GetGymByNameUseCase {
+export class SearchGymsUseCase {
   constructor(private gymsRepository: IGymsRepository) {}
 
-  async execute({ name }: GetGymByNameUseCaseRequest): Promise<void> {}
+  async execute({ name }: SearchGymsUseCaseRequest): Promise<void> {}
 }
