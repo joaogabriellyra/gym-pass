@@ -24,7 +24,7 @@ describe('Fetch User Check-in History User Case', () => {
 
     await Promise.all(threeInsertions)
 
-    const { checkIns } = await sut.execute({ userId })
+    const { checkIns } = await sut.execute({ userId, page: 1 })
 
     expect(
       checkIns.every(
@@ -48,7 +48,7 @@ describe('Fetch User Check-in History User Case', () => {
 
     await Promise.all(threeInsertions)
 
-    const { checkIns } = await sut.execute({ userId: wrongId })
+    const { checkIns } = await sut.execute({ userId: wrongId, page: 1 })
 
     expect(checkIns.length).toBe(0)
   })
@@ -69,6 +69,7 @@ describe('Fetch User Check-in History User Case', () => {
       userId: userId,
       page: 2,
     })
+
     expect(checkIns.length).toBe(2)
   })
 })
