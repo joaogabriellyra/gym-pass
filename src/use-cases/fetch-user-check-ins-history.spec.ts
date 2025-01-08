@@ -24,7 +24,7 @@ describe('Fetch User Check-in History User Case', () => {
 
     await Promise.all(threeInsertions)
 
-    const checkIns = await checkInsRepository.findManyByUserId(userId)
+    const { checkIns } = await sut.execute({ userId })
 
     expect(
       checkIns.every(
@@ -32,5 +32,24 @@ describe('Fetch User Check-in History User Case', () => {
           'id' in checkin && 'user_id' in checkin && 'gym_id' in checkin
       )
     ).toBe(true)
+  })
+
+  it('should not be able to fetch check-in history with a non-existent id', async () => {
+    const wrongId = 'non-existent-id'
+    const userId = 'user-id-01'
+    const gymId = 'gym-id-01'
+
+    const threeInsertions = Array.from({ length: 3 }).map(() =>
+      checkInsRepository.create({
+        gym_id: gymId,
+        user_id: userId,
+      })
+    )
+
+    await Promise.all(threeInsertions)
+
+    const { checkIns } = await sut.execute({ userId: wrongId })
+
+    expect(checkIns.length).toBe(0)
   })
 })
