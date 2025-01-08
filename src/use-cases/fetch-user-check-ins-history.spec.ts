@@ -52,4 +52,23 @@ describe('Fetch User Check-in History User Case', () => {
 
     expect(checkIns.length).toBe(0)
   })
+
+  it('should be able to fetch paginated check in history', async () => {
+    const userId = 'user-id-01'
+
+    const twentytwoInsertions = Array.from({ length: 22 }).map((_, index) =>
+      checkInsRepository.create({
+        gym_id: `gym-id-${index}`,
+        user_id: userId,
+      })
+    )
+
+    await Promise.all(twentytwoInsertions)
+
+    const { checkIns } = await sut.execute({
+      userId: userId,
+      page: 2,
+    })
+    expect(checkIns.length).toBe(2)
+  })
 })
