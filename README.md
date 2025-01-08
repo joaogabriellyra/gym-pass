@@ -8,12 +8,12 @@ GymPass style app.
 - [x] It must be possible to authenticate;
 - [x] It must be possible to retrieve the profile of a logged-in user;
 - [ ] It must be possible to retrieve the number of check-ins performed by the logged-in user;
-- [ ] It must be possible for the user to retrieve their check-in history;
+- [x] It must be possible for the user to retrieve their check-in history;
 - [ ] It must be possible for the user to search for nearby gyms;
 - [ ] It must be possible for the user to search for gyms by name;
 - [x] It must be possible for the user to check in at a gym;
 - [ ] It must be possible to validate a user's check-in;
-- [ ] It must be possible to register a gym;
+- [x] It must be possible to register a gym;
 
 # BRs (Business Rules)
 
@@ -29,5 +29,5 @@ GymPass style app.
 
 - [x] The user's password must be encrypted;
 - [x] Application data must be stored in a PostgreSQL database;
-- [ ] All data lists must be paginated with 20 items per page;
+- [x] All data lists must be paginated with 20 items per page;
 - [ ] The user must be identified using a JWT (Json Web Token);
