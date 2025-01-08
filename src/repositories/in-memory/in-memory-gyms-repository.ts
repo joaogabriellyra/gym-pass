@@ -4,6 +4,9 @@ import { randomUUID } from 'node:crypto'
 import { Decimal } from '@prisma/client/runtime/library'
 
 export class InMemoryGymsRepository implements IGymsRepository {
+  findByName(name: string): Promise<Gym | null> {
+    throw new Error('Method not implemented.')
+  }
   public gyms: Gym[] = []
 
   async create(data: Prisma.GymCreateInput): Promise<Gym> {
