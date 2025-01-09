@@ -3,7 +3,7 @@ import type { Prisma, User } from '@prisma/client'
 import type { IUsersRepository } from '../users-repository'
 
 export class PrismaUsersRepository implements IUsersRepository {
-  async findOneById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<User | null> {
     return await prisma.user.findUnique({
       where: {
         id,
@@ -16,7 +16,7 @@ export class PrismaUsersRepository implements IUsersRepository {
     return user
   }
 
-  async findOneByEmail(email: string) {
+  async findByEmail(email: string) {
     return await prisma.user.findUnique({
       where: {
         email,
