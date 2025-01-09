@@ -4,7 +4,7 @@ import { hash } from 'bcryptjs'
 import { randomUUID } from 'node:crypto'
 
 export class InMemoryUsersRepository implements IUsersRepository {
-  async findOneById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<User | null> {
     const user = this.items.find(item => item.id === id)
     if (!user) {
       return null
@@ -21,7 +21,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
       password_hash: await hash('123456', 6),
     }
 
-    const sameEmailUsedTwice = await this.findOneByEmail(user.email)
+    const sameEmailUsedTwice = await this.findByEmail(user.email)
     if (sameEmailUsedTwice) {
       throw new Error('email already in use')
     }
@@ -30,7 +30,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
 
     return user
   }
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = this.items.find(item => item.email === email)
     if (!user) {
       return null

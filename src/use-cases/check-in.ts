@@ -29,7 +29,7 @@ export class CheckInUseCase {
     userLatitude,
     userLongitude,
   }: CheckInUseCaseRequest): Promise<CheckInUseCaseResponse> {
-    const gym = await this.gymsRepository.findOneById(gymId)
+    const gym = await this.gymsRepository.findById(gymId)
 
     if (!gym) {
       throw new InvalidCredentialsError()
