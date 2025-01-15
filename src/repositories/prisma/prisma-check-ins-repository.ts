@@ -18,8 +18,14 @@ export class PrismaCheckInsRepository implements ICheckInsRepository {
   findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
     throw new Error('Method not implemented.')
   }
-  countByUserId(userId: string): Promise<number> {
-    throw new Error('Method not implemented.')
+  async countByUserId(userId: string): Promise<number> {
+    const count = await prisma.checkIn.count({
+      where: {
+        user_id: userId,
+      },
+    })
+
+    return count
   }
   async save(checkIn: CheckIn): Promise<void> {
     await prisma.checkIn.update({
