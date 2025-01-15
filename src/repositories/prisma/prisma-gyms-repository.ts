@@ -6,8 +6,14 @@ export class PrismaGymsRepository implements IGymsRepository {
   findManyNearby(userLatitude: number, userLongitude: number): Promise<Gym[]> {
     throw new Error('Method not implemented.')
   }
-  findById(id: string): Promise<Gym | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string): Promise<Gym | null> {
+    const gym = await prisma.gym.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return gym
   }
   searchMany(query: string, page: number): Promise<Gym[]> {
     throw new Error('Method not implemented.')
