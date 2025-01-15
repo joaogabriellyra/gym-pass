@@ -21,12 +21,19 @@ export class PrismaCheckInsRepository implements ICheckInsRepository {
   countByUserId(userId: string): Promise<number> {
     throw new Error('Method not implemented.')
   }
-  save(checkIn: CheckIn): Promise<void> {
-    throw new Error('Method not implemented.')
+  async save(checkIn: CheckIn): Promise<void> {
+    await prisma.checkIn.update({
+      where: {
+        id: checkIn.id,
+      },
+      data: checkIn,
+    })
   }
   async create(data: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn> {
-    return await prisma.checkIn.create({
+    const checkIn = await prisma.checkIn.create({
       data,
     })
+
+    return checkIn
   }
 }
