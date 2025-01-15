@@ -4,21 +4,42 @@ import { randomUUID } from 'node:crypto'
 import dayjs from 'dayjs'
 
 export class InMemoryCheckInsRepository implements ICheckInsRepository {
+  public checkIns: CheckIn[] = []
+
+  async save(checkIn: CheckIn): Promise<void> {
+    const checkInIndex = this.checkIns.findIndex(
+      check => check.id === checkIn.id
+    )
+
+    if (checkInIndex >= 0) {
+      this.checkIns[checkInIndex] = checkIn
+    }
+  }
+
+  async findById(checkInId: string): Promise<CheckIn | null> {
+    const checkIn = this.checkIns.find(checkIn => checkIn.id === checkInId)
+
+    if (!checkIn) {
+      return null
+    }
+
+    return checkIn
+  }
+
   async countByUserId(userId: string): Promise<number> {
-    const howManyCheckIns = this.items.filter(
+    const howManyCheckIns = this.checkIns.filter(
       checkin => checkin.user_id === userId
     ).length
 
     return howManyCheckIns
   }
   async findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
-    const checkins = this.items
+    const checkins = this.checkIns
       .filter(checkin => checkin.user_id === userId)
       .slice((page - 1) * 20, page * 20)
 
     return checkins
   }
-  public items: CheckIn[] = []
 
   async findByUserIdOnDate(
     userId: string,
@@ -27,7 +48,7 @@ export class InMemoryCheckInsRepository implements ICheckInsRepository {
     const startOfTheDay = dayjs(date).startOf('date')
     const endOfTheDay = dayjs(date).endOf('date')
 
-    const checkInWithoutDateValidation = this.items.find(checkIn => {
+    const checkInWithoutDateValidation = this.checkIns.find(checkIn => {
       const checkInDate = dayjs(checkIn.created_at)
       const isOnSameDate =
         checkInDate.isAfter(startOfTheDay) && checkInDate.isBefore(endOfTheDay)
@@ -50,7 +71,7 @@ export class InMemoryCheckInsRepository implements ICheckInsRepository {
       created_at: new Date(),
     }
 
-    this.items.push(checkIn)
+    this.checkIns.push(checkIn)
 
     return checkIn
   }
