@@ -1,5 +1,3 @@
-import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error'
-import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym-use-case'
 import { makeSearchGymsUseCase } from '@/use-cases/factories/make-search-gyms'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import z from 'zod'
