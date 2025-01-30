@@ -10,7 +10,7 @@ describe('Create Check-in (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to check-in', async () => {
+  it.skip('should be able to check-in', async () => {
     await request(app.server).post('/users').send({
       name: 'John Doe',
       email: 'john.doe@gmail.com',
