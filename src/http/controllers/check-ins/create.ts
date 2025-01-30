@@ -1,5 +1,4 @@
 import { makeCheckInUseCase } from '@/use-cases/factories/make-check-in-use-case'
-import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym-use-case'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import z from 'zod'
 
