@@ -3,7 +3,7 @@ import request from 'supertest'
 import { app } from '@/app'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
-describe('Search Gym (e2e)', () => {
+describe('Nearby Gym (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -11,7 +11,7 @@ describe('Search Gym (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to search gyms by title', async () => {
+  it('should be able to list nearby gyms', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     await request(app.server)
@@ -31,8 +31,8 @@ describe('Search Gym (e2e)', () => {
       .send({
         title: 'Smartfit',
         description: 'Vem ser Smart!',
-        latitude: -8.0379534,
-        longitude: -35.0391105,
+        latitude: -8.0357729,
+        longitude: -34.9488992,
         phone: '',
       })
 
@@ -42,24 +42,37 @@ describe('Search Gym (e2e)', () => {
       .send({
         title: 'Selfit',
         description: 'Vem ser Selfit!',
-        latitude: -8.0379534,
-        longitude: -35.0391105,
+        latitude: -8.0486663,
+        longitude: -34.9596037,
         phone: '',
       })
 
-    const response = await request(app.server)
-      .get('/gyms/search')
-      .query({ q: 'fit' })
+    await request(app.server)
+      .post('/gyms/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        page: 1,
+        title: 'Hi Academia Candeias',
+        description: 'Hi',
+        latitude: -8.2102787,
+        longitude: -34.9249907,
+        phone: '081998010247',
       })
 
+    const response = await request(app.server)
+      .get('/gyms/nearby')
+      .query({
+        latitude: -8.0521627,
+        longitude: -34.9590755,
+      })
+      .set('Authorization', `Bearer ${token}`)
+      .send()
+
     expect(response.statusCode).toEqual(200)
-    expect(response.body.gyms).toHaveLength(2)
-    expect(response.body.gyms).toEqual([
-      expect.objectContaining({ title: 'Selfit' }),
+    expect(response.body.nearbyGyms).toHaveLength(3)
+    expect(response.body.nearbyGyms).toEqual([
+      expect.objectContaining({ title: 'Green' }),
       expect.objectContaining({ title: 'Smartfit' }),
+      expect.objectContaining({ title: 'Selfit' }),
     ])
   })
 })
