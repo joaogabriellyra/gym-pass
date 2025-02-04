@@ -1,7 +1,7 @@
 import type { ICheckInsRepository } from '@/repositories/check-ins-repository'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import type { CheckIn } from '@prisma/client'
-import { checkInCreatedInMoreThanTwentyMinutes } from './utils/check-in-created-in-more-than-20-minutes'
+import { checkInCreatedInMoreThanTwentyMinutes } from '../utils/check-in-created-in-more-than-20-minutes'
 import { LateCheckInValidationError } from './errors/late-check-in-validation-error'
 
 interface ValidateCheckInUseCaseRequest {

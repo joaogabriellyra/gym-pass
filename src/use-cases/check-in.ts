@@ -2,7 +2,7 @@ import type { CheckIn } from '@prisma/client'
 import type { ICheckInsRepository } from '@/repositories/check-ins-repository'
 import type { IGymsRepository } from '@/repositories/gyms-repository'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
-import { getDistanceBetweeCoordinates } from './utils/get-distance-between-coordinates'
+import { getDistanceBetweeCoordinates } from '../utils/get-distance-between-coordinates'
 import { MaxDistanceError } from './errors/max-distance-error'
 import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins-error'
 
