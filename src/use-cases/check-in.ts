@@ -32,7 +32,6 @@ export class CheckInUseCase {
     const gym = await this.gymsRepository.findById(gymId)
 
     if (!gym) {
-      console.log(gym)
       throw new InvalidCredentialsError()
     }
 
