@@ -4,7 +4,7 @@ import { app } from '@/app'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 import { prisma } from '@/db/prisma'
 
-describe('Create Check-in (e2e)', () => {
+describe('Check-in History (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,7 +12,7 @@ describe('Create Check-in (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to create a check-in', async () => {
+  it("should be able to see the user's check-ins history", async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     const gym = await prisma.gym.create({
@@ -25,7 +25,7 @@ describe('Create Check-in (e2e)', () => {
       },
     })
 
-    const response = await request(app.server)
+    await request(app.server)
       .post(`/gyms/${gym.id}/check-ins`)
       .set('Authorization', `Bearer ${token}`)
       .send({
@@ -33,6 +33,16 @@ describe('Create Check-in (e2e)', () => {
         longitude: -35.0391105,
       })
 
-    expect(response.statusCode).toEqual(201)
+    const response = await request(app.server)
+      .get('/check-ins/history')
+      .query({ page: 1 })
+      .set('Authorization', `Bearer ${token}`)
+      .send()
+
+    expect(response.statusCode).toEqual(200)
+    expect(response.body.checkIns).toHaveLength(1)
+    expect(response.body.checkIns).toEqual([
+      expect.objectContaining({ gym_id: gym.id }),
+    ])
   })
 })
