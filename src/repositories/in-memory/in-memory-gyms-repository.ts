@@ -2,7 +2,7 @@ import type { Gym, Prisma } from '@prisma/client'
 import type { IGymsRepository } from '../gyms-repository'
 import { randomUUID } from 'node:crypto'
 import { Decimal } from '@prisma/client/runtime/library'
-import { getDistanceBetweeCoordinates } from '@/use-cases/utils/get-distance-between-coordinates'
+import { getDistanceBetweeCoordinates } from '@/utils/get-distance-between-coordinates'
 
 export class InMemoryGymsRepository implements IGymsRepository {
   async findManyNearby(

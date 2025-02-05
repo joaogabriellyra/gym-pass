@@ -25,7 +25,7 @@ describe('Get User Profile Use Case', () => {
   })
 
   it('should not be able to get a user profile with wrong id', async () => {
-    const createdUser = await usersRepository.create({
+    await usersRepository.create({
       name: 'Linus Torvalds',
       email: 'linus.torvalds@example.com',
       password_hash: await hash('123456', 6),
