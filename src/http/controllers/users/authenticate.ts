@@ -40,10 +40,10 @@ export async function authenticate(
 
     return reply
       .setCookie('refreshToken', refreshToken, {
-        path: '/',
+        path: '/', // accessible throughout the application
         secure: true, // HTTPs
-        sameSite: true,
-        httpOnly: true,
+        sameSite: true, // same domain
+        httpOnly: true, // accessible only for the back-end
       })
       .status(200)
       .send({
