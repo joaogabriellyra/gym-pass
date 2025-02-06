@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "GymPass style app.",
   "main": "index.js",
+  "private": true,
+  "workspaces": ["prisma/vitest-environment-prisma"],
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
     "start": "node build/server.js",
     "build": "tsup src --out-dir build",
     "test": "vitest run --dir src/use-cases",
     "test:watch": "vitest run --dir src/use-cases",
-    "pretest:e2e": "cd prisma/vitest-environment-prisma && npm link && cd .. && cd .. && npm link vitest-environment-prisma",
+    "pretest:e2e": "npm link --workspace=prisma/vitest-environment-prisma vitest-environment-prisma",
     "test:e2e": "vitest run --dir src/http",
     "test:e2e:watch": "vitest --dir src/http",
     "test:coverage": "vitest run --coverage",
@@ -34,6 +36,7 @@
     "vitest": "2.1.8"
   },
   "dependencies": {
+    "@fastify/cookie": "11.0.2",
     "@fastify/jwt": "9.0.3",
     "@prisma/client": "6.0.1",
     "bcryptjs": "2.4.3",
